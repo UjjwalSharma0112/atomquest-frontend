@@ -96,7 +96,7 @@ export default function LoginPage() {
                   onClick={() => setShowPass(!showPass)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary transition-colors"
                 >
-                  {showPass ? <EyeOff size={14} /> : <Eye size={14} />}
+                  {!showPass ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
               </div>
               {fieldErrors.password && <p className="text-xs text-danger">{fieldErrors.password}</p>}
