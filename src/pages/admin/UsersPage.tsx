@@ -96,7 +96,6 @@ export default function UsersPage() {
                       onChange={(e) => setEditForm((p) => ({ ...p, managerId: e.target.value }))}
                       className="bg-bg-elevated border border-bg-border text-text-primary rounded-lg px-2 py-1 text-xs focus:outline-none focus:ring-2 focus:ring-primary/40"
                     >
-                      <option value="">No Manager</option>
                       {managers.filter((m) => m.id !== user.id).map((m) => (
                         <option key={m.id} value={m.id}>{m.name}</option>
                       ))}
