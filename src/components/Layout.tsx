@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   Target, CheckSquare, Users, Settings, BarChart2, FileText, Shield,
-  LogOut, Menu, X, ChevronRight, Activity, Layers, Flag
+  LogOut, Menu, X, ChevronRight, Activity, Layers, Flag, TrendingUp
 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { Badge } from './ui';
@@ -22,6 +22,7 @@ const managerNav: NavItem[] = [
   { path: '/manager/team', label: 'Team Approvals', icon: <Flag size={16} /> },
   { path: '/manager/team/all', label: 'All Team Goals', icon: <Layers size={16} /> },
   { path: '/manager/checkins', label: 'Team Check-ins', icon: <Activity size={16} /> },
+  { path: '/analytics', label: 'Analytics', icon: <TrendingUp size={16} /> },
 ];
 
 const adminNav: NavItem[] = [
@@ -29,6 +30,7 @@ const adminNav: NavItem[] = [
   { path: '/admin/cycles', label: 'Cycles', icon: <Settings size={16} /> },
   { path: '/admin/goals', label: 'All Goals', icon: <Target size={16} /> },
   { path: '/admin/reports', label: 'Reports', icon: <BarChart2 size={16} /> },
+  { path: '/analytics', label: 'Analytics', icon: <TrendingUp size={16} /> },
   { path: '/admin/audit', label: 'Audit Log', icon: <FileText size={16} /> },
 ];
 

@@ -17,6 +17,7 @@ import CyclesPage from './pages/admin/CyclesPage';
 import AdminGoalsPage from './pages/admin/AdminGoalsPage';
 import ReportsPage from './pages/admin/ReportsPage';
 import AuditPage from './pages/admin/AuditPage';
+import AnalyticsPage from './pages/analytics/AnalyticsPage';
 
 const roleDashboard = { EMPLOYEE: '/employee/goals', MANAGER: '/manager/team', ADMIN: '/admin/users' };
 
@@ -58,6 +59,9 @@ export default function App() {
         <Route path="/admin/goals" element={<AuthedLayout><ProtectedRoute roles={['ADMIN']}><AdminGoalsPage /></ProtectedRoute></AuthedLayout>} />
         <Route path="/admin/reports" element={<AuthedLayout><ProtectedRoute roles={['ADMIN', 'MANAGER']}><ReportsPage /></ProtectedRoute></AuthedLayout>} />
         <Route path="/admin/audit" element={<AuthedLayout><ProtectedRoute roles={['ADMIN']}><AuditPage /></ProtectedRoute></AuthedLayout>} />
+
+        {/* Analytics */}
+        <Route path="/analytics" element={<AuthedLayout><ProtectedRoute roles={['ADMIN', 'MANAGER']}><AnalyticsPage /></ProtectedRoute></AuthedLayout>} />
 
         <Route path="*" element={<RootRedirect />} />
       </Routes>
