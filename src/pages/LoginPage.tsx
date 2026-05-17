@@ -114,27 +114,7 @@ export default function LoginPage() {
           </form>
         </div>
 
-        {/* Demo credentials */}
-        <div className="mt-4 bg-bg-surface/60 border border-bg-border rounded-xl p-4">
-          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-3">Demo Credentials</p>
-          <div className="space-y-2">
-            {[
-              { role: 'Admin', email: 'admin@test.com', pass: 'admin123' },
-              { role: 'Manager', email: 'manager@test.com', pass: 'manager123' },
-              { role: 'Employee', email: 'employee@test.com', pass: 'employee123' },
-            ].map((c) => (
-              <button
-                key={c.role}
-                type="button"
-                onClick={() => { setEmail(c.email); setPassword(c.pass); setError(''); }}
-                className="w-full flex items-center justify-between px-3 py-2 bg-bg-elevated hover:bg-bg-border rounded-lg transition-colors text-left group"
-              >
-                <span className="text-xs font-medium text-text-muted group-hover:text-text-primary transition-colors">{c.role}</span>
-                <span className="text-xs font-mono text-text-dim group-hover:text-text-muted transition-colors">{c.email}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        
       </div>
     </div>
   );
