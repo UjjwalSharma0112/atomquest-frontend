@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
-  Target, CheckSquare, Users, Settings, BarChart2, FileText, Shield,
-  LogOut, Menu, X, ChevronRight, Activity, Layers, Flag, TrendingUp
-} from 'lucide-react';
-import { useAuthStore } from '../store/authStore';
-import { Badge } from './ui';
+  Target,
+  CheckSquare,
+  Users,
+  Settings,
+  BarChart2,
+  FileText,
+  Shield,
+  LogOut,
+  Menu,
+  X,
+  ChevronRight,
+  Activity,
+  Layers,
+  Flag,
+  TrendingUp,
+} from "lucide-react";
+import { useAuthStore } from "../store/authStore";
+import { Badge, Modal, Button } from "./ui";
 
 interface NavItem {
   path: string;
@@ -14,40 +27,61 @@ interface NavItem {
 }
 
 const employeeNav: NavItem[] = [
-  { path: '/employee/goals', label: 'My Goals', icon: <Target size={16} /> },
-  { path: '/employee/checkins', label: 'Check-ins', icon: <CheckSquare size={16} /> },
+  { path: "/employee/goals", label: "My Goals", icon: <Target size={16} /> },
+  {
+    path: "/employee/checkins",
+    label: "Check-ins",
+    icon: <CheckSquare size={16} />,
+  },
 ];
 
 const managerNav: NavItem[] = [
-  { path: '/manager/team', label: 'Team Approvals', icon: <Flag size={16} /> },
-  { path: '/manager/team/all', label: 'All Team Goals', icon: <Layers size={16} /> },
-  { path: '/manager/checkins', label: 'Team Check-ins', icon: <Activity size={16} /> },
-  { path: '/analytics', label: 'Analytics', icon: <TrendingUp size={16} /> },
+  { path: "/manager/team", label: "Team Approvals", icon: <Flag size={16} /> },
+  {
+    path: "/manager/team/all",
+    label: "All Team Goals",
+    icon: <Layers size={16} />,
+  },
+  {
+    path: "/manager/checkins",
+    label: "Team Check-ins",
+    icon: <Activity size={16} />,
+  },
+  { path: "/analytics", label: "Analytics", icon: <TrendingUp size={16} /> },
 ];
 
 const adminNav: NavItem[] = [
-  { path: '/admin/users', label: 'Users', icon: <Users size={16} /> },
-  { path: '/admin/cycles', label: 'Cycles', icon: <Settings size={16} /> },
-  { path: '/admin/goals', label: 'All Goals', icon: <Target size={16} /> },
-  { path: '/admin/reports', label: 'Reports', icon: <BarChart2 size={16} /> },
-  { path: '/analytics', label: 'Analytics', icon: <TrendingUp size={16} /> },
-  { path: '/admin/audit', label: 'Audit Log', icon: <FileText size={16} /> },
+  { path: "/admin/users", label: "Users", icon: <Users size={16} /> },
+  { path: "/admin/cycles", label: "Cycles", icon: <Settings size={16} /> },
+  { path: "/admin/goals", label: "All Goals", icon: <Target size={16} /> },
+  { path: "/admin/reports", label: "Reports", icon: <BarChart2 size={16} /> },
+  { path: "/analytics", label: "Analytics", icon: <TrendingUp size={16} /> },
+  { path: "/admin/audit", label: "Audit Log", icon: <FileText size={16} /> },
 ];
 
-const roleVariant = { EMPLOYEE: 'info', MANAGER: 'warning', ADMIN: 'danger' } as const;
+const roleVariant = {
+  EMPLOYEE: "info",
+  MANAGER: "warning",
+  ADMIN: "danger",
+} as const;
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { user, clearAuth } = useAuthStore();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
-  const navItems = user?.role === 'EMPLOYEE' ? employeeNav
-    : user?.role === 'MANAGER' ? managerNav
-    : adminNav;
+  const navItems =
+    user?.role === "EMPLOYEE"
+      ? employeeNav
+      : user?.role === "MANAGER"
+        ? managerNav
+        : adminNav;
 
   function handleLogout() {
     clearAuth();
-    navigate('/login');
+    navigate("/login");
+    setLogoutOpen(false);
   }
 
   const sidebar = (
@@ -59,8 +93,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <Shield size={14} className="text-white" />
           </div>
           <div>
-            <span className="font-bold text-text-primary tracking-tight text-sm">AtomQuest</span>
-            <p className="text-[10px] text-text-muted font-mono uppercase tracking-widest">Goal Portal</p>
+            <span className="font-bold text-text-primary tracking-tight text-sm">
+              AtomQuest
+            </span>
+            <p className="text-[10px] text-text-muted font-mono uppercase tracking-widest">
+              Goal Portal
+            </p>
           </div>
         </div>
       </div>
@@ -78,18 +116,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all group ${
                 isActive
-                  ? 'bg-primary/10 text-primary font-medium'
-                  : 'text-text-muted hover:text-text-primary hover:bg-bg-elevated'
+                  ? "bg-primary/10 text-primary font-medium"
+                  : "text-text-muted hover:text-text-primary hover:bg-bg-elevated"
               }`
             }
           >
             {({ isActive }) => (
               <>
-                <span className={isActive ? 'text-primary' : 'text-text-muted group-hover:text-text-primary transition-colors'}>
+                <span
+                  className={
+                    isActive
+                      ? "text-primary"
+                      : "text-text-muted group-hover:text-text-primary transition-colors"
+                  }
+                >
                   {item.icon}
                 </span>
                 <span className="flex-1">{item.label}</span>
-                {isActive && <ChevronRight size={12} className="text-primary" />}
+                {isActive && (
+                  <ChevronRight size={12} className="text-primary" />
+                )}
               </>
             )}
           </NavLink>
@@ -103,10 +149,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {user?.name?.charAt(0)}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-text-primary truncate">{user?.name}</p>
-            <Badge variant={roleVariant[user?.role ?? 'EMPLOYEE']} className="mt-0.5">{user?.role}</Badge>
+            <p className="text-xs font-medium text-text-primary truncate">
+              {user?.name}
+            </p>
+            <Badge
+              variant={roleVariant[user?.role ?? "EMPLOYEE"]}
+              className="mt-0.5"
+            >
+              {user?.role}
+            </Badge>
           </div>
-          <button onClick={handleLogout} className="text-text-muted hover:text-danger transition-colors opacity-0 group-hover:opacity-100" title="Logout">
+          <button
+            onClick={() => setLogoutOpen(true)}
+            className="text-text-muted  hover:text-danger transition-colors opacity-60 group-hover:opacity-100"
+            title="Logout"
+          >
             <LogOut size={14} />
           </button>
         </div>
@@ -122,7 +179,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Mobile sidebar */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-40 flex">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setSidebarOpen(false)}
+          />
           <div className="relative z-10">{sidebar}</div>
         </div>
       )}
@@ -131,14 +191,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top bar */}
         <header className="bg-bg-surface border-b border-bg-border px-5 py-3 flex items-center gap-4 shrink-0">
-          <button className="md:hidden text-text-muted hover:text-text-primary" onClick={() => setSidebarOpen(true)}>
+          <button
+            className="md:hidden text-text-muted hover:text-text-primary"
+            onClick={() => setSidebarOpen(true)}
+          >
             <Menu size={18} />
           </button>
           <div className="flex-1" />
           <div className="flex items-center gap-3">
-            <span className="text-sm text-text-muted hidden sm:block">{user?.name}</span>
-            <Badge variant={roleVariant[user?.role ?? 'EMPLOYEE']}>{user?.role}</Badge>
-            <button onClick={handleLogout} className="text-text-muted hover:text-danger transition-colors p-1.5 hover:bg-bg-elevated rounded-lg" title="Logout">
+            <span className="text-sm text-text-muted hidden sm:block">
+              {user?.name}
+            </span>
+            <Badge variant={roleVariant[user?.role ?? "EMPLOYEE"]}>
+              {user?.role}
+            </Badge>
+            <button
+              onClick={() => setLogoutOpen(true)}
+              className="text-text-muted hover:text-danger transition-colors p-1.5 hover:bg-bg-elevated rounded-lg"
+              title="Logout"
+            >
               <LogOut size={15} />
             </button>
           </div>
@@ -149,6 +220,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <div className="p-6 animate-in">{children}</div>
         </main>
       </div>
+
+      <Modal
+        open={logoutOpen}
+        onClose={() => setLogoutOpen(false)}
+        title="Sign out"
+      >
+        <div className="space-y-4">
+          <p className="text-sm text-text-muted">
+            Are you sure you want to sign out?
+          </p>
+          <div className="flex gap-2 justify-end pt-2 border-t border-bg-border">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setLogoutOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="danger" size="sm" onClick={handleLogout}>
+              <LogOut size={13} />
+              Sign out
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
