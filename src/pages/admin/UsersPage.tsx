@@ -106,27 +106,47 @@ export default function UsersPage() {
                   )}
                 </Td>
                 <Td><span className="text-xs font-mono text-text-muted">{formatDate(user.createdAt)}</span></Td>
-                <Td>
-                  {editId === user.id ? (
+<Td>
+                  {user.role === "ADMIN" ? (
+                    <span className="text-xs text-text-muted">—</span>
+                  ) : editId === user.id ? (
                     <div className="flex gap-1.5">
                       <Button
                         size="sm"
                         loading={updateMutation.isPending}
-                        onClick={() => updateMutation.mutate({
-                          id: user.id,
-                          data: { role: editForm.role, managerId: editForm.managerId || null }
-                        })}
+                        onClick={() =>
+                          updateMutation.mutate({
+                            id: user.id,
+                            data: {
+                              role: editForm.role,
+                              managerId: editForm.managerId || null,
+                            },
+                          })
+                        }
                       >
                         <Save size={12} />
                         Save
                       </Button>
-                      <Button variant="secondary" size="sm" onClick={() => setEditId(null)}>Cancel</Button>
+
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => setEditId(null)}
+                      >
+                        Cancel
+                      </Button>
                     </div>
                   ) : (
                     <Button
                       variant="secondary"
                       size="sm"
-                      onClick={() => { setEditId(user.id); setEditForm({ role: user.role, managerId: user.managerId ?? '' }); }}
+                      onClick={() => {
+                        setEditId(user.id);
+                        setEditForm({
+                          role: user.role,
+                          managerId: user.managerId ?? "",
+                        });
+                      }}
                     >
                       Edit
                     </Button>
