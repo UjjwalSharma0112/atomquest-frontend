@@ -47,7 +47,6 @@ const managerNav: NavItem[] = [
     label: "Team Check-ins",
     icon: <Activity size={16} />,
   },
-  { path: "/analytics", label: "Analytics", icon: <TrendingUp size={16} /> },
 ];
 
 const adminNav: NavItem[] = [
@@ -161,7 +160,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
           <button
             onClick={() => setLogoutOpen(true)}
-            className="text-text-muted  hover:text-danger transition-colors opacity-60 group-hover:opacity-100"
+            className="text-text-muted hover:text-danger transition-colors opacity-0 group-hover:opacity-100"
             title="Logout"
           >
             <LogOut size={14} />
